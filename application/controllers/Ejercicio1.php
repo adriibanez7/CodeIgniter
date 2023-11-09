@@ -20,13 +20,13 @@ class Ejercicio1 extends CI_Controller {
 		$data['titulo1'] = "Listado de productos";
 
 		$data['listado2'] = $this->Productos->get_all_categories();
-		$data['titulo2'] = "Listado de categorías";
+		$data['titulo2'] = "Listado de categorÃ­as";
 
 		$data['listado3'] = $this->Productos->get_products_and_categories();
-		$data['titulo3'] = "Listado de productos y categorías";
+		$data['titulo3'] = "Listado de productos y categorÃ­as";
 
 		$data['listado4'] = $this->Productos->get_products_with_category_zapatillas();
-		$data['titulo4'] = "Listado de productos con categoría zapatillas";
+		$data['titulo4'] = "Listado de productos con categorÃ­a zapatillas";
 
 		$data['listado5'] = $this->Productos->get_products_starts_with_category_zapa();
 		$data['titulo5'] = "Listado de productos zapa";
@@ -35,10 +35,10 @@ class Ejercicio1 extends CI_Controller {
 		$data['titulo6'] = "Media precios";
 
 		$data['listado7'] = $this->Productos->get_products_in_category();
-		$data['titulo7'] = "Listado de categorías con número de productos";
+		$data['titulo7'] = "Listado de categorÃ­as con nÃºmero de productos";
 
 		$data['listado8'] = $this->Productos->get_category_more_10_products();
-		$data['titulo8'] = "Listado de categorías con más de diez productos";
+		$data['titulo8'] = "Listado de categorÃ­as con mÃ¡s de diez productos";
 
 		$this->Productos->insert_2_new_products();
 

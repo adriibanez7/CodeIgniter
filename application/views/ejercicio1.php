@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>ID</th>
 			<th>Nombre</th>
 			<th>Marca</th>
-			<th>Categoria</th>
+			<th>Categor√≠a</th>
 			<th>Cantidad</th>
 			<th>Precio</th>
 
@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td><?= $row_item['MARCA'] ?? "-" ?></td>
 				<td><?= $row_item['FK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['CANTIDAD'] ?></td>
-				<td><?= $row_item['PRECIO'] . " Ä" ?></td>
+				<td><?= $row_item['PRECIO'] . " ‚Ç¨" ?></td>
 			</tr>
 		<?php endforeach; ?>
 
@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<table>
 		<tr>
 			<th>ID</th>
-			<th>Categoria</th>
+			<th>Categor√≠a</th>
 		</tr>
 
 		<?php foreach ($listado2 as $row_item): ?>
@@ -65,11 +65,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>ID Producto</th>
 			<th>Producto</th>
 			<th>Marca</th>
-			<th>Categoria</th>
 			<th>Cantidad</th>
 			<th>Precio</th>
-			<th>ID Categoria</th>
-			<th>Categoria</th>
+			<th>ID Categor√≠a</th>
+			<th>Categor√≠a</th>
 		</tr>
 
 		<?php foreach ($listado3 as $row_item): ?>
@@ -77,9 +76,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td><?= $row_item['PK_ID_PRODUCTO'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 				<td><?= $row_item['MARCA'] ?? "-" ?></td>
-				<td><?= $row_item['FK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['CANTIDAD'] ?></td>
-				<td><?= $row_item['PRECIO'] . " Ä" ?></td>
+				<td><?= $row_item['PRECIO'] . " ‚Ç¨" ?></td>
 				<td><?= $row_item['PK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 			</tr>
@@ -97,11 +95,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>ID Producto</th>
 			<th>Producto</th>
 			<th>Marca</th>
-			<th>Categoria</th>
 			<th>Cantidad</th>
 			<th>Precio</th>
-			<th>ID Categoria</th>
-			<th>Categoria</th>
+			<th>ID Categor√≠a</th>
+			<th>Categor√≠a</th>
 		</tr>
 
 		<?php foreach ($listado4 as $row_item): ?>
@@ -109,9 +106,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td><?= $row_item['PK_ID_PRODUCTO'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 				<td><?= $row_item['MARCA'] ?? "-" ?></td>
-				<td><?= $row_item['FK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['CANTIDAD'] ?></td>
-				<td><?= $row_item['PRECIO'] . " Ä" ?></td>
+				<td><?= $row_item['PRECIO'] . " ‚Ç¨" ?></td>
 				<td><?= $row_item['PK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 			</tr>
@@ -129,10 +125,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<th>ID Producto</th>
 			<th>Producto</th>
 			<th>Marca</th>
-			<th>Categoria</th>
 			<th>Cantidad</th>
 			<th>Precio</th>
-			<th>ID Categoria</th>
+			<th>ID Categor√≠a</th>
 			<th>Categoria</th>
 		</tr>
 
@@ -141,9 +136,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<td><?= $row_item['PK_ID_PRODUCTO'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 				<td><?= $row_item['MARCA'] ?? "-" ?></td>
-				<td><?= $row_item['FK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['CANTIDAD'] ?></td>
-				<td><?= $row_item['PRECIO'] . " Ä" ?></td>
+				<td><?= $row_item['PRECIO'] . " ‚Ç¨" ?></td>
 				<td><?= $row_item['PK_ID_CATEGORIA'] ?></td>
 				<td><?= $row_item['NOMBRE'] ?></td>
 			</tr>
@@ -155,16 +149,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id="container">
 	<h1><?= $titulo6?></h1>
-	<h2><?= $listado6[0]['PRECIO_MEDIO'] . " Ä"?></h2>
+	<h2><?= round($listado6[0]['PRECIO_MEDIO']) . " ‚Ç¨"?></h2>
 </div>
 
 <div id="container">
 	<h1><?= $titulo7?></h1>
 	<table>
 		<tr>
-			<th>ID CategorÌa</th>
-			<th>Nombre CategorÌa</th>
-			<th>N˙mero de productos</th>
+			<th>ID Categor√≠a</th>
+			<th>Nombre Categor√≠a</th>
+			<th>N√∫mero de productos</th>
 		</tr>
 
 		<?php foreach ($listado7 as $row_item): ?>
@@ -186,9 +180,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php if($listado8):?>
 	<table>
 		<tr>
-			<th>ID CategorÌa</th>
-			<th>Nombre CategorÌa</th>
-			<th>N˙mero de productos</th>
+			<th>ID Categor√≠a</th>
+			<th>Nombre Categor√≠a</th>
+			<th>N√∫mero de productos</th>
 		</tr>
 		<?php foreach ($listado8 as $row_item): ?>
 			<tr>
