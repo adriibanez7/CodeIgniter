@@ -1,6 +1,6 @@
 <?php
 
-class Productos extends CI_Model {
+class ProductosModel extends CI_Model {
 	public function get_all_products()
 	{
 		return $this->db->get('PRODUCTO')->result_array();
