@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Productos extends CI_Controller {
+class Ficha extends CI_Controller {
 
 	public function __construct()
 	{
@@ -16,28 +16,30 @@ class Productos extends CI_Controller {
 
 	public function index()
 	{
-		$this->mostrar_ficha();
+		$this->mostrar_nueva_ficha();
 	}
 
-	public function mostrar_ficha(){
+	public function mostrar_ficha($id){
 
-		$data['categorias'] = $this->ProductosModel->get_all_categories();
+		$data['producto'] = $this->ProductosModel->get_product($id);
+		$data += $this->cargar_componentes($data);
+		$this->load->view('ficha', $data);
+
+	}
+
+	public function mostrar_nueva_ficha(){
+
 		$data = $this->cargar_componentes();
 		$this->load->view('ficha', $data);
 
 }
 
 	public function guardado_ok(){
-		echo 'Guardado correctamente'; die;
+		redirect('listado/mostrar_listado');
 	}
 
 	public function guardar(){
-
-		$txNombre = $this->input->post('txNombre');
-		$txMarca = $this->input->post('txMarca');
-		$txPrecio = $this->input->post('txPrecio');
-		$txCantidad = $this->input->post('txCantidad');
-		$selCategoria = $this->input->post('selCategoria');
+		var_dump("GUARDAR");
 
 		$this->validar();
 	}
@@ -68,19 +70,58 @@ class Productos extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->mostrar_ficha();
+			$this->mostrar_ficha($this->input->post('tx_PK_ID_PRODUCTO'));
 		}
 		else
 		{
+			$tx_PK_ID_PRODUCTO = $this->input->post('tx_PK_ID_PRODUCTO');
+			$txNombre = $this->input->post('txNombre');
+			$txMarca = $this->input->post('txMarca');
+			$txPrecio = $this->input->post('txPrecio');
+			$txCantidad = $this->input->post('txCantidad');
+			$selCategoria = $this->input->post('selCategoria');
+
+			$producto = array(
+				'NOMBRE' => $txNombre,
+				'MARCA' => $txMarca,
+				'FK_ID_CATEGORIA' => $selCategoria,
+				'CANTIDAD' => $txCantidad,
+				'PRECIO' => $txPrecio
+			);
+			var_dump($producto);
+			var_dump($tx_PK_ID_PRODUCTO);
+
+			if (isset($tx_PK_ID_PRODUCTO) && !empty($tx_PK_ID_PRODUCTO)){
+				$id_producto = array('PK_ID_PRODUCTO' => $tx_PK_ID_PRODUCTO);
+				$this->actualizar_producto($producto,$id_producto);
+//				echo "actualizar";
+			}else{
+				$this->insertar_producto($producto);
+//				echo "insertar";
+			}
 			$this->guardado_ok();
+
 		}
 	}
 
-	public function cargar_componentes(){
+	public function insertar_producto($producto){
+		$this->ProductosModel->insert_new_product($producto);
+
+	}
+	public function actualizar_producto($producto,$id_producto){
+		$this->ProductosModel->update_product($producto,$id_producto);
+
+	}
+
+	public function eliminar_producto($id_producto){
+		$this->ProductosModel->delete_product($id_producto);
+		redirect('listado/mostrar_listado');
+	}
+
+	public function cargar_componentes($data = array()){
 		$data['txNombre'] = array(
 			'name'          => 'txNombre',
 			'id'            => 'txNombre',
-			'value'         => set_value('txNombre'),
 			'placeholder'   => 'Nombre'
 		);
 
@@ -88,21 +129,18 @@ class Productos extends CI_Controller {
 		$data['txMarca'] = array(
 			'name'          => 'txMarca',
 			'id'            => 'txMarca',
-			'value'         => set_value('txMarca'),
 			'placeholder'   => 'Marca'
 		);
 
 		$data['txPrecio'] = array(
 			'name'          => 'txPrecio',
 			'id'            => 'txPrecio',
-			'value'         => set_value('txPrecio'),
 			'placeholder'   => 'Precio'
 		);
 
 		$data['txCantidad'] = array(
 			'name'          => 'txCantidad',
 			'id'            => 'txCantidad',
-			'value'         => set_value('txCantidad'),
 			'placeholder'   => 'Cantidad'
 		);
 
@@ -115,7 +153,7 @@ class Productos extends CI_Controller {
 
 			$data['options'][$categoriaId] = $categoriaNombre;
 		}
-		$data['selectedCategoria'] = set_value('selCategoria', '0');
+		$data['selectedCategoria'] = set_value('selCategoria', $data['producto'][0]['FK_ID_CATEGORIA'] ?? '0');
 
 
 		$data['btSubmit'] = array(
@@ -124,6 +162,14 @@ class Productos extends CI_Controller {
 			'value'         => 'true',
 			'type'          => 'submit',
 			'content'       => 'Guardar'
+		);
+
+		$data['btVolver'] = array(
+			'name' => 'btVolver',
+			'id' => 'btVolver',
+			'value' => 'true',
+			'type' => 'button',
+			'content' => 'Volver',
 		);
 
 		return $data;
