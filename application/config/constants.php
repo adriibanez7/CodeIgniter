@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+define('RUTA_ADMINISTRACION', 'zona_privada');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

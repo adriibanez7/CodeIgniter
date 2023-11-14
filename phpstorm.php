@@ -74,8 +74,10 @@ class CI_Model extends CI_Controller
 {
 }
 
-class MY_Controller extends CI_Controller
-{
+class MY_Controller extends CI_Controller{
+	function __construct(){
+		parent::__construct();
+	}
 }
 
 class MX_Controller extends CI_Controller
