@@ -13,13 +13,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <div class="container">
 	<h2>Listado de todos los Productos</h2>
+
+	<?= form_open('listado/mostrar_listado', ['method' => 'get']); ?>
+	<div>
+		<?= form_label('Nombre:', 'nombre'); ?>
+		<?= form_input(['name' => 'nombre', 'id' => 'nombre', 'value' => set_value('nombre', $this->input->get('nombre'))]); ?>
+	</div>
+
+	<div>
+		<?= form_label('Categoría:', 'categoria'); ?>
+		<?= form_dropdown('categoria', $categorias_dropdown, set_value('categoria', $this->input->get('categoria'))); ?>
+	</div>
+
+	<div>
+		<?= form_submit('buscar', 'Buscar'); ?>
+	</div>
+	<?= form_close(); ?>
+
 	<?= anchor(site_url('ficha/'), 'Nuevo producto'); ?>
+
 	<?php $this->table->set_heading(array('ID', 'PRODUCTO', 'MARCA', 'CATEGORIA','CANTIDAD','PRECIO')); ?>
 	<?php foreach ($productos as $producto): ?>
 		<?php
 		$detalles_url = site_url('ficha/mostrar_ficha/' . $producto['PK_ID_PRODUCTO']);
 		?>
-		<?php $this->table->add_row( anchor(site_url("ficha/mostrar_ficha/"). $producto['PK_ID_PRODUCTO'],$producto['PK_ID_PRODUCTO']), $producto['NOMBRE_PRODUCTO'], $producto['MARCA'], $producto['NOMBRE_CATEGORIA'], $producto['CANTIDAD'] . ' uds.', $producto['PRECIO']. ' €'); ?>
+		<?php $this->table->add_row(anchor(site_url("ficha/mostrar_ficha/") . $producto['PK_ID_PRODUCTO'],$producto['PK_ID_PRODUCTO']), $producto['NOMBRE_PRODUCTO'], $producto['MARCA'], $producto['NOMBRE_CATEGORIA'], $producto['CANTIDAD'] . ' uds.', $producto['PRECIO']. ' €'); ?>
 	<?php endforeach; ?>
 
 	<?= $this->table->generate(); ?>
@@ -33,4 +51,3 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 </body>
 </html>
-

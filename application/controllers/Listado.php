@@ -34,10 +34,13 @@ class Listado extends CI_Controller {
 		$config['next_link'] = '>';
 		$config['prev_link'] = '<';
 
+
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$data["productos"] = $this->ProductosModel->get_products_and_categories($config["per_page"], $page);
+		$nombre = $this->input->get('nombre');
+		$categoria = $this->input->get('categoria');
+		$data["productos"] = $this->ProductosModel->get_products_and_categories($config["per_page"],$page);
 		$data["links"] = $this->pagination->create_links();
 
 		$start = $page + 1;
@@ -45,9 +48,11 @@ class Listado extends CI_Controller {
 		$total = $config["total_rows"];
 		$data["pagination_text"] = "{$start} al {$end} de {$total} productos";
 
-
-
-
+		$categorias = $this->ProductosModel->get_all_categories();
+		$data["categorias_dropdown"] = ['' => 'Todas'];
+		foreach ($categorias as $categoria) {
+			$data["categorias_dropdown"][$categoria['PK_ID_CATEGORIA']] = $categoria['NOMBRE'];
+		}
 
 		$this->load->view('listado', $data);
 	}
