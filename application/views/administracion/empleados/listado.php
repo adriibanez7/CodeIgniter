@@ -49,7 +49,7 @@
 
 			<?php foreach ($empleados as $e): ?>
 				<?php
-				$url_ficha = site_url('empleados/ver/' . $e['PK_ID_EMPLEADO']);
+				$url_ficha = site_url('zona_privada/empleados/ver/' . $e['PK_ID_EMPLEADO']);
 				$this->table->add_row(
 					anchor($url_ficha, $e['PK_ID_EMPLEADO']),
 					anchor($url_ficha, $e['COD_EMPLEADO']),
