@@ -83,69 +83,82 @@ class Reservas extends Administrador_Controller
 		$this->load->view('administracion/reservas/listado', $data);
 	}
 
+	public function aceptar_reserva($id_reserva) {
+		$this->Reservas_model->accept_reserva($id_reserva);
 
-	public function guardar()
-	{
-		$id_empleado = $this->input->post("tx_PK_ID_EMPLEADO");
-
-		$this->form_validation->set_rules('tx_nombre', 'Nombre', 'required',
-			array('required' => 'Debes proporcionar un %s.')
-		);
-
-		$this->form_validation->set_rules('tx_apellidos', 'Apellidos', 'required',
-			array('required' => 'Debes proporcionar un %s.')
-		);
-
-		$this->form_validation->set_rules('tx_fecha_nacimiento', 'Fecha Nacimiento', 'callback_date_valid');
-
-
-		if (!$this->form_validation->run()) {
-			$this->ficha();
-		} else {
-			if (!$id_empleado) {
-				$tx_nombre = $this->input->post('tx_nombre');
-				$tx_apellidos = $this->input->post('tx_apellidos');
-				$tx_fecha_nacimiento = $this->input->post('tx_fecha_nacimiento');
-
-				$empleado = array(
-					'NOMBRE' => $tx_nombre,
-					'APELLIDOS' => $tx_apellidos,
-					'FECHA_NACIMIENTO' => $tx_fecha_nacimiento,
-					'COD_EMPLEADO' => $this->Empleados_model->generar_cod_emple(),
-				);
-
-				$this->insertar_empleado($empleado);
-			} else {
-				$tx_PK_ID_EMPLEADO = $this->input->post('tx_PK_ID_EMPLEADO');
-				$tx_nombre = $this->input->post('tx_nombre');
-				$tx_apellidos = $this->input->post('tx_apellidos');
-				$tx_fecha_nacimiento = $this->input->post('tx_fecha_nacimiento');
-
-				$empleado = array(
-					'NOMBRE' => $tx_nombre,
-					'APELLIDOS' => $tx_apellidos,
-					'FECHA_NACIMIENTO' => $tx_fecha_nacimiento,
-				);
-
-				$this->actualizar_empleado($empleado,$tx_PK_ID_EMPLEADO);
-			}
-			$this->guardado_ok();
-		}
-
-
+		redirect('zona_privada/reservas/listado');
 	}
 
-	public function insertar_empleado($empleado)
-	{
-		$this->Empleados_model->insert_new_employee($empleado);
+	public function rechazar_reserva($id_reserva) {
+		$this->Reservas_model->deny_reserva($id_reserva);
 
+		redirect('zona_privada/reservas/listado');
 	}
 
-	public function actualizar_empleado($empleado, $id_empleado)
-	{
-		$this->Empleados_model->update_empleado($empleado, $id_empleado);
 
-	}
+
+//	public function guardar()
+//	{
+//		$id_empleado = $this->input->post("tx_PK_ID_EMPLEADO");
+//
+//		$this->form_validation->set_rules('tx_nombre', 'Nombre', 'required',
+//			array('required' => 'Debes proporcionar un %s.')
+//		);
+//
+//		$this->form_validation->set_rules('tx_apellidos', 'Apellidos', 'required',
+//			array('required' => 'Debes proporcionar un %s.')
+//		);
+//
+//		$this->form_validation->set_rules('tx_fecha_nacimiento', 'Fecha Nacimiento', 'callback_date_valid');
+//
+//
+//		if (!$this->form_validation->run()) {
+//			$this->ficha();
+//		} else {
+//			if (!$id_empleado) {
+//				$tx_nombre = $this->input->post('tx_nombre');
+//				$tx_apellidos = $this->input->post('tx_apellidos');
+//				$tx_fecha_nacimiento = $this->input->post('tx_fecha_nacimiento');
+//
+//				$empleado = array(
+//					'NOMBRE' => $tx_nombre,
+//					'APELLIDOS' => $tx_apellidos,
+//					'FECHA_NACIMIENTO' => $tx_fecha_nacimiento,
+//					'COD_EMPLEADO' => $this->Empleados_model->generar_cod_emple(),
+//				);
+//
+//				$this->insertar_empleado($empleado);
+//			} else {
+//				$tx_PK_ID_EMPLEADO = $this->input->post('tx_PK_ID_EMPLEADO');
+//				$tx_nombre = $this->input->post('tx_nombre');
+//				$tx_apellidos = $this->input->post('tx_apellidos');
+//				$tx_fecha_nacimiento = $this->input->post('tx_fecha_nacimiento');
+//
+//				$empleado = array(
+//					'NOMBRE' => $tx_nombre,
+//					'APELLIDOS' => $tx_apellidos,
+//					'FECHA_NACIMIENTO' => $tx_fecha_nacimiento,
+//				);
+//
+//				$this->actualizar_empleado($empleado,$tx_PK_ID_EMPLEADO);
+//			}
+//			$this->guardado_ok();
+//		}
+//
+//
+//	}
+
+//	public function insertar_empleado($empleado)
+//	{
+//		$this->Empleados_model->insert_new_employee($empleado);
+//
+//	}
+//
+//	public function aceptar_reserva($id_reserva)
+//	{
+//		$this->Reservas_model->acept_reserva($id_reserva);
+//
+//	}
 
 	function date_valid()
 	{

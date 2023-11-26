@@ -110,15 +110,16 @@ class Reservas_model extends CI_Model {
 		$this->db->insert('RESERVA', $reserva);
 	}
 
-	public function aceptar_reserva($reserva,$id_reserva){
-
-	}
-
-	public function denegar_reserva($reserva,$id_reserva){
-
-	}
-
 	public function get_estados(){
 		return $this->db->get('ESTADO_RESERVA')->result_array();
+	}
+
+	public function accept_reserva($id_reserva){
+		$this->db->where('PK_ID_RESERVA', $id_reserva);
+		$this->db->update('RESERVA', array('FK_ID_ESTADO'=>'2'));
+	}
+	public function deny_reserva($id_reserva){
+		$this->db->where('PK_ID_RESERVA', $id_reserva);
+		$this->db->update('RESERVA', array('FK_ID_ESTADO'=>'3'));
 	}
 }

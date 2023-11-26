@@ -38,17 +38,16 @@
 
 		<div>
 			<?= form_label('Fecha Desde:', 'fecha_desde'); ?>
-			<?= form_input(['name' => 'tx_fecha_desde', 'id' => 'tx_fecha_desde', 'value' => set_value('tx_fecha_desde', $this->input->post('tx_fecha_desde'))]); ?>
+			<?= form_input(['name' => 'tx_fecha_desde','type'=>'date', 'id' => 'tx_fecha_desde', 'value' => set_value('tx_fecha_desde', $this->input->post('tx_fecha_desde'))]); ?>
 		</div>
 
 		<div>
 			<?= form_label('Fecha Hasta:', 'fecha_hasta'); ?>
-			<?= form_input(['name' => 'tx_fecha_hasta', 'id' => 'tx_fecha_hasta', 'value' => set_value('tx_fecha_hasta', $this->input->post('tx_fecha_hasta'))]); ?>
+			<?= form_input(['name' => 'tx_fecha_hasta','type'=>'date', 'id' => 'tx_fecha_hasta', 'value' => set_value('tx_fecha_hasta', $this->input->post('tx_fecha_hasta'))]); ?>
 		</div>
 
 		<div>
 			<?= form_label('Estado:', 'estado'); ?>
-<!--			--><?php //= form_input(['name' => 'tx_estado', 'id' => 'tx_estado', 'value' => set_value('tx_estado', $this->input->post('tx_estado'))]); ?>
 			<?= form_dropdown('tx_estado', $opciones, set_value('tx_estado', $this->input->post('tx_estado')), 'id="tx_estado"'); ?>
 		</div>
 
@@ -56,10 +55,6 @@
 			<?= form_submit('buscar', 'Buscar'); ?>
 		</div>
 		<?= form_close(); ?>
-
-<!--		--><?php //var_dump($reservas);?>
-
-<!--		--><?php //var_dump(reservas);?>
 
 		<?php if (!empty($reservas)): ?>
 			<h2>Listado de reservas de TALLERES GUZMÁN S.L.</h2>
@@ -74,8 +69,7 @@
 					'FECHA_DESDE',
 					'FECHA_HASTA',
 					'ESTADO_RESERVA',
-					'ACEPTAR',
-					'RECHAZAR'
+					'ACEPTAR O RECHAZAR'
 					)); ?>
 
 			<?php foreach ($reservas as $r): ?>
@@ -91,6 +85,11 @@
 					$r['FECHA_DESDE'],
 					$r['FECHA_HASTA'],
 					$r['NOMBRE_ESTADO'],
+					($r['NOMBRE_ESTADO'] == 'Pte. de aceptar') ?
+//						form_button(array('name' => 'aceptar_reserva', 'id' => 'btn_aceptar' . $r['PK_ID_RESERVA'], 'type' => 'submit', 'class' => 'btn btn-success', 'content' => 'Aceptar', 'value' => $r['PK_ID_RESERVA'])) .
+						form_button('aceptar_reserva', 'Aceptar', 'onclick="window.location.href =\'' . site_url(RUTA_ADMINISTRACION.'/reservas/aceptar_reserva/'.$r['PK_ID_RESERVA']) . '\'"') .
+						form_button('rechazar_reserva', 'Rechazar', 'onclick="window.location.href =\'' . site_url(RUTA_ADMINISTRACION.'/reservas/rechazar_reserva/'.$r['PK_ID_RESERVA']) . '\'"') :
+						''
 				);
 				?>
 			<?php endforeach; ?>
@@ -112,10 +111,6 @@
 			<h2>No se han encontrado reservas</h2>
 		<?php endif; ?>
 	</div>
-
-
-
-
 	<br/>
 	<button onclick="window.location.href='<?=site_url(RUTA_ADMINISTRACION)?>'">Volver</button>
 </body>

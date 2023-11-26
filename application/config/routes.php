@@ -64,5 +64,9 @@ $route['^zona_privada/vehiculos'] = 'zona_privada/vehiculos/listado';
 $route['^zona_privada/vehiculos/ficha'] = 'zona_privada/vehiculos/ficha';
 $route['^zona_privada/vehiculos/ficha/(:num)'] = 'zona_privada/vehiculos/ficha/$1';
 
+$route['^zona_privada/reservas/aceptar_reserva/(:num)'] = 'zona_privada/reservas/aceptar_reserva/$1';
+$route['^zona_privada/reservas/denegar_reserva/(:num)'] = 'zona_privada/rreservas/denegar_reserva/$1';
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
