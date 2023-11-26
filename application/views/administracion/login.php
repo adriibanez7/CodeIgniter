@@ -36,7 +36,7 @@
 		</div>
 
 		<?php
-		$url_volver = site_url('empleados/');
+		$url_volver = site_url('vehiculos/');
 		echo form_button('btn_volver', 'Volver', 'onclick="window.location.href =\'' . $url_volver . '\'"');
 		?>
 

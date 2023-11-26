@@ -53,5 +53,30 @@ class Empleados_model extends CI_Model {
 
 		return $this->db->get('EMPLEADO')->result_array();
 	}
+
+	public function insert_new_employee($empleado) {
+
+		$this->db->insert('EMPLEADO', $empleado);
+	}
+
+	public function update_empleado($empleado,$PK_ID_EMPLEADO)
+	{
+		$this->db->where('PK_ID_EMPLEADO', $PK_ID_EMPLEADO);
+		$this->db->update('EMPLEADO', $empleado);
+	}
+
+	public function generar_cod_emple(){
+		$caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$longitud = 6;
+		$cod_emple = substr(str_shuffle($caracteres), 0, $longitud);
+
+		$this->db->where('COD_EMPLEADO', $cod_emple);
+		$query = $this->db->get('EMPLEADO');
+
+		if ($query->num_rows() > 0) {
+			return $this->generar_cod_emple();
+		}
+		return $cod_emple;
+	}
 }
 

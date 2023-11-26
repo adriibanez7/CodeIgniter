@@ -27,7 +27,7 @@ class Vehiculos_model extends CI_Model {
 		return $this->db->get('VEHICULO')->result_array();
 	}
 
-	public function get_all_vehicles($limit, $offset,$marca = null, $modelo = null, $matricula = null,$order_by = '',$order_dir = '')
+	public function get_all_vehicles($limit = 5, $offset = 5,$marca = null, $modelo = null, $matricula = null,$order_by = '',$order_dir = '')
 	{
 		$this->db->select();
 
@@ -62,6 +62,17 @@ class Vehiculos_model extends CI_Model {
 		}
 
 		return $marcas;
+	}
+
+	public function insert_new_vehicle($vehicle) {
+
+		$this->db->insert('VEHICULO', $vehicle);
+	}
+
+	public function update_vehicle($vehiculo, $PK_ID_VEHICULO)
+	{
+		$this->db->where('PK_ID_VEHICULO', $PK_ID_VEHICULO);
+		$this->db->update('VEHICULO', $vehiculo);
 	}
 
 

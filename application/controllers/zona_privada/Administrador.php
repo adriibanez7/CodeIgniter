@@ -38,7 +38,7 @@ class Administrador extends Administrador_Controller
 
 			// Compruebo que exista el administrador en bbdd
 			if (!$administrador) {
-				$this->data['validation_errors'][] = "Usuario  incorrecta";
+				$this->data['validation_errors'][] = "Usuario o contraseña incorrectos";
 				$this->load->view('administracion/login', $this->data);
 				return;
 			}
@@ -46,7 +46,7 @@ class Administrador extends Administrador_Controller
 			// Compruebo la contraseña. Genero el hash en sha-256 y compruebo con la contraseña obtenida de base de datos.
 			$password = hash("sha256", $this->input->post('txPassword') ?? '');
 			if ($password != $administrador['PASSWORD']) {
-				$this->data['validation_errors'][] = " contraseña incorrecta";
+				$this->data['validation_errors'][] = "Usuario o contraseña incorrectos";
 				$this->load->view('administracion/login', $this->data);
 				return;
 			}

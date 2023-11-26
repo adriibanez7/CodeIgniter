@@ -8,7 +8,10 @@
 	<br/>
 	<button onclick="window.location.href='<?=site_url(RUTA_ADMINISTRACION . '/empleados/listado')?>'">Gestionar empleados</button>
 	<br/>
+	<button onclick="window.location.href='<?=site_url(RUTA_ADMINISTRACION . '/vehiculos/listado')?>'">Gestionar vehiculos</button>
 	<br/>
+	<button onclick="window.location.href='<?=site_url(RUTA_ADMINISTRACION . '/reservas/listado')?>'">Gestionar reservas</button>
+	<br>
 	<button onclick="window.location.href='<?=site_url(RUTA_ADMINISTRACION . '/administrador/logout')?>'">Cerrar sesión</button>
 </body>
 </html>

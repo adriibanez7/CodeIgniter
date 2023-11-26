@@ -50,10 +50,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'vehiculos';
+
 $route['vehiculos/ver/(:num)'] = 'vehiculos/ver/$1';
 $route['vehiculos/reservar/(:num)'] = 'vehiculos/reservar/$1';
+
 $route['^zona_privada'] = 'zona_privada/administrador';
-$route['^zona_privada/empleados'] = 'empleados';
-$route['^zona_privada/empleados/ver/(:num)'] = 'empleados/ver/$1';
+
+$route['^zona_privada/empleados'] = 'zona_privada/empleados/listado';
+$route['^zona_privada/empleados/ficha'] = 'zona_privada/empleados/ficha';
+$route['^zona_privada/empleados/ficha/(:num)'] = 'zona_privada/empleados/ficha/$1';
+
+$route['^zona_privada/vehiculos'] = 'zona_privada/vehiculos/listado';
+$route['^zona_privada/vehiculos/ficha'] = 'zona_privada/vehiculos/ficha';
+$route['^zona_privada/vehiculos/ficha/(:num)'] = 'zona_privada/vehiculos/ficha/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

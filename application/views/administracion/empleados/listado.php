@@ -2,10 +2,7 @@
 <html>
 <head/>
 <body>
-	<h1>Plataforma - Zona privada</h1>
-	<p>Soy el listado de empleados</p>
-
-
+	<h1>Empleados - Zona privada</h1>
 
 	<div class="container">
 		<?= form_open('zona_privada/empleados/listado', ['method' => 'post']); ?>
@@ -34,7 +31,13 @@
 		</div>
 		<?= form_close(); ?>
 
-		<?php var_dump($empleados);?>
+		<?php
+		$url_ficha_empleado = site_url(RUTA_ADMINISTRACION.'/empleados/ficha');
+//		var_dump($url_ficha_empleado);
+		echo form_button('btn_nuevo_emple', 'Nuevo empleado', 'onclick="window.location.href =\'' . $url_ficha_empleado . '\'"');
+		?>
+
+<!--		--><?php //var_dump($empleados);?>
 
 		<?php if (!empty($empleados)): ?>
 			<h2>Listado de empleados de TALLERES GUZMÁN S.L.</h2>
@@ -43,19 +46,17 @@
 					'COD_EMPLEADO',
 					array('data' => 'NOMBRE', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`nombre`)'),
 					array('data' => 'APELLIDOS', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`apellidos`)'),
-					'EMAIL',
 					array('data' => 'FECHA_NACIMIENTO', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`fecha_nacimiento`)'),
 					'BAJA')); ?>
 
 			<?php foreach ($empleados as $e): ?>
 				<?php
-				$url_ficha = site_url('zona_privada/empleados/ver/' . $e['PK_ID_EMPLEADO']);
+				$url_ficha = site_url('zona_privada/empleados/ficha/' . $e['PK_ID_EMPLEADO']);
 				$this->table->add_row(
 					anchor($url_ficha, $e['PK_ID_EMPLEADO']),
 					anchor($url_ficha, $e['COD_EMPLEADO']),
 					anchor($url_ficha, $e['NOMBRE']),
 					anchor($url_ficha, $e['APELLIDOS']),
-					anchor($url_ficha, $e['EMAIL']),
 					anchor($url_ficha, $e['FECHA_NACIMIENTO']),
 					anchor($url_ficha, $e['BAJA']),
 				);

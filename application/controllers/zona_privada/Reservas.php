@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Empleados extends Administrador_Controller
+class Reservas extends Administrador_Controller
 {
 
 	public function __construct()
@@ -33,8 +33,8 @@ class Empleados extends Administrador_Controller
 		}
 
 		$config = array();
-		$config["base_url"] = base_url() . "zona_privada/empleados/listado";
-		$config["total_rows"] = $this->Empleados_model->get_employees_count(
+		$config["base_url"] = base_url() . "zona_privada/reservas/listado";
+		$config["total_rows"] = $this->Reservas_model->get_reservas_count(
 			$this->input->post('tx_cod_emple'),
 			$this->input->post('tx_nombre'),
 			$this->input->post('tx_apellidos')
@@ -49,42 +49,43 @@ class Empleados extends Administrador_Controller
 		$this->pagination->initialize($config);
 		$page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
 
-		$data["empleados"] = $this->Empleados_model->get_all_employees(
+		$data["reservas"] = $this->Reservas_model->get_all_reservas(
 			$config["per_page"],
 			$page,
-			$this->input->post('tx_cod_emple'),
-			$this->input->post('tx_nombre'),
-			$this->input->post('tx_apellidos'),
+			$this->input->post('tx_marca'),
+			$this->input->post('tx_modelo'),
+			$this->input->post('tx_matricula'),
+			$this->input->post('tx_nom_emple'),
+			$this->input->post('tx_ape_emple'),
+			$this->input->post('tx_fecha_desde'),
+			$this->input->post('tx_fecha_hasta'),
+			$this->input->post('tx_estado'),
 			$this->input->post('order_by'),
 			$this->input->post('order_dir'),
 		);
 
+//		var_dump($this->input->post());
+
 		$start = $page + 1;
 		$end = min(($page + 1) * $config["per_page"], $config["total_rows"]);
 		$total = $config["total_rows"];
-		$data["pagination_text"] = "{$start} al {$end} de {$total} empleados";
+		$data["pagination_text"] = "{$start} al {$end} de {$total} reservas";
 
 		$data["num_registros_selected"] = $num_registros;
 
-		$this->load->view('administracion/empleados/listado', $data);
-	}
-
-	public function ficha($id_empleado = null)
-	{
-		if ($id_empleado) {
-			$data['empleado'] = $this->Empleados_model->get_employee($id_empleado);
-		} else {
-			$data['empleado'] = null;
+		$data['marcas'] = $this->Vehiculos_model->get_marcas();
+		$estados = $this->Reservas_model->get_estados();
+		$data['opciones'] = array('' => 'Selecciona un estado');
+		foreach ($estados as $estado) {
+			$data['opciones'][$estado['PK_ID_ESTADO_RESERVA']] = $estado['NOMBRE_ESTADO'];
 		}
 
-//		var_dump($data);
-		$this->load->view('administracion/empleados/ficha', $data);
+		$this->load->view('administracion/reservas/listado', $data);
 	}
 
 
 	public function guardar()
 	{
-
 		$id_empleado = $this->input->post("tx_PK_ID_EMPLEADO");
 
 		$this->form_validation->set_rules('tx_nombre', 'Nombre', 'required',
@@ -168,7 +169,7 @@ class Empleados extends Administrador_Controller
 
 	private function guardado_ok()
 	{
-		redirect('zona_privada/empleados/listado');
+		redirect('zona_privada/reservas/listado');
 	}
 
 

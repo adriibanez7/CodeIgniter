@@ -30,8 +30,7 @@ class Vehiculos extends CI_Controller {
 			$num_registros = $this->input->post('num_registros');
 		}
 
-//		$this->Administrador_model->add_new_admin('Rodrigo','Muñoz Lanuza','romunoz@gmail.com','1234');
-
+//		$this->Administrador_model->add_new_admin('Adrián','Ibáñez Montalvo','adrian.ibanez@circulargo.com','1234');
 
 		$config = array();
 		$config["base_url"] = base_url() . "vehiculos/mostrar_vehiculos";
