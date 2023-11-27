@@ -53,17 +53,24 @@
 				array('data' => 'MARCA', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`marca`)'),
 				array('data' => 'MODELO', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`modelo`)'),
 				array('data' => 'MATRICULA', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`matricula`)'),
-				'UBICACIÓN')); ?>
+				'UBICACIÓN',
+				'IMAGEN')); ?>
 
 		<?php foreach ($vehiculos as $v): ?>
 			<?php
 			$url_ficha = site_url('zona_privada/vehiculos/ficha/' . $v['PK_ID_VEHICULO']);
+
+			$imagen = $this->Vehiculos_model->obtener_ruta_imagen($v['PK_ID_VEHICULO']);
+//			var_dump(base_url() . $imagen);
+			$imagen_html = ($imagen) ? '<img src="' . base_url() . $imagen . '" width="50" height="50">' : '';
+
 			$this->table->add_row(
 				anchor($url_ficha, $v['PK_ID_VEHICULO']),
 				anchor($url_ficha, $v['MARCA']),
 				anchor($url_ficha, $v['MODELO']),
 				anchor($url_ficha, $v['MATRICULA']),
 				anchor($url_ficha, $v['UBICACION']),
+				$imagen_html
 			);
 			?>
 		<?php endforeach; ?>

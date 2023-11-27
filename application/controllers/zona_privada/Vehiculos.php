@@ -32,6 +32,10 @@ class Vehiculos extends Administrador_Controller
 			$num_registros = $this->input->post('num_registros');
 		}
 
+//		$num_registros_selected = $this->input->post('num_registros') ? $this->input->post('num_registros') : $this->session->userdata('num_registros');
+//		$this->session->set_userdata('num_registros', $num_registros_selected);
+
+
 		$config = array();
 		$config["base_url"] = base_url() . "zona_privada/vehiculos/listado";
 		$config["total_rows"] = $this->Vehiculos_model->get_vehicles_count(
@@ -64,7 +68,9 @@ class Vehiculos extends Administrador_Controller
 		$total = $config["total_rows"];
 		$data["pagination_text"] = "{$start} al {$end} de {$total} vehiculos";
 
-		$data["num_registros_selected"] = $num_registros;
+//		$data["num_registros_selected"] = $num_registros_selected;
+
+		$data['num_registros_selected'] = $num_registros;
 
 		$data['marcas'] = $this->Vehiculos_model->get_marcas();
 
@@ -106,36 +112,51 @@ class Vehiculos extends Administrador_Controller
 		);
 
 
+
+		$config['upload_path'] = './assets/images/vehiculos/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = 5120;
+		$config['encrypt_name'] = TRUE;
+		$this->load->library('upload', $config);
+
+
 		if (!$this->form_validation->run()) {
 			$this->ficha();
 		} else {
-			if (!$id_vehiculo) {
-				$tx_marca = $this->input->post('tx_marca');
-				$tx_modelo = $this->input->post('tx_modelo');
-				$tx_matricula = $this->input->post('tx_matricula');
-				$tx_ubicacion = $this->input->post('tx_ubicacion');
 
-				$vehiculo = array(
-					'MARCA' => $tx_marca,
-					'MODELO' => $tx_modelo,
-					'MATRICULA' => $tx_matricula,
-					'UBICACION' => $tx_ubicacion,
-				);
+			$ruta_imagen = '';
+
+			if ($this->upload->do_upload('imagen')) {
+				$imagen_data = $this->upload->data();
+				$ruta_imagen = 'assets/images/vehiculos/' . $imagen_data['file_name'];
+//			var_dump($ruta_imagen);
+
+			}
+
+			if (!$this->upload->do_upload('imagen')) {
+				$error = array('error' => $this->upload->display_errors());
+				print_r($error);
+				exit;
+			}
+
+			$tx_marca = $this->input->post('tx_marca');
+			$tx_modelo = $this->input->post('tx_modelo');
+			$tx_matricula = $this->input->post('tx_matricula');
+			$tx_ubicacion = $this->input->post('tx_ubicacion');
+
+			$vehiculo = array(
+				'MARCA' => $tx_marca,
+				'MODELO' => $tx_modelo,
+				'MATRICULA' => $tx_matricula,
+				'UBICACION' => $tx_ubicacion,
+				'RUTA_IMAGEN' => $ruta_imagen
+			);
+
+			if (!$id_vehiculo) {
 
 				$this->insertar_vehiculo($vehiculo);
 			} else {
 				$tx_PK_ID_VEHICULO = $this->input->post('tx_PK_ID_VEHICULO');
-				$tx_marca = $this->input->post('tx_marca');
-				$tx_modelo = $this->input->post('tx_modelo');
-				$tx_matricula = $this->input->post('tx_matricula');
-				$tx_ubicacion = $this->input->post('tx_ubicacion');
-
-				$vehiculo = array(
-					'MARCA' => $tx_marca,
-					'MODELO' => $tx_modelo,
-					'MATRICULA' => $tx_matricula,
-					'UBICACION' => $tx_ubicacion,
-				);
 
 				$this->actualizar_vehiculo($vehiculo,$tx_PK_ID_VEHICULO);
 			}

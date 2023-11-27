@@ -8,6 +8,7 @@
 	<?= form_input(['name' => 'matricula', 'value' => $vehiculo[0]['MATRICULA'], 'readonly' => 'readonly']); ?>
 	<?= form_label('Ubicación','ubicacion')?>
 	<?= form_input(['name' => 'ubicacion', 'value' => $vehiculo[0]['UBICACION'], 'readonly' => 'readonly']); ?>
+
 	<br>
 	<?php
 	$url_ficha = site_url('vehiculos/reservar/' . $vehiculo[0]['PK_ID_VEHICULO']);

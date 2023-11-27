@@ -52,17 +52,24 @@
 			array('data' => 'MARCA', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`marca`)'),
 			array('data' => 'MODELO', 'style' => 'cursor:pointer;', 'onclick' => 'ordenar(`modelo`)'),
 			'MATRÍCULA',
-				'UBICACIÓN')); ?>
+				'UBICACIÓN',
+				'IMAGEN')); ?>
 
 		<?php foreach ($vehiculos as $v): ?>
 			<?php
 			$url_ficha = site_url('vehiculos/ver/' . $v['PK_ID_VEHICULO']);
+
+			$imagen = $this->Vehiculos_model->obtener_ruta_imagen($v['PK_ID_VEHICULO']);
+			$imagen_html = ($imagen) ? '<img src="' . base_url($imagen) . '" width="50" height="50">' : '';
+
+
 			$this->table->add_row(
 				anchor($url_ficha, $v['PK_ID_VEHICULO']),
 				anchor($url_ficha, $v['MARCA']),
 				anchor($url_ficha, $v['MODELO']),
 				anchor($url_ficha, $v['MATRICULA']),
-				anchor($url_ficha, $v['UBICACION'])
+				anchor($url_ficha, $v['UBICACION']),
+				$imagen_html
 			);
 			?>
 		<?php endforeach; ?>
@@ -77,8 +84,11 @@
 		<?php
 		echo form_open('vehiculos/mostrar_vehiculos', array('id' => 'form_num_registros'));
 		echo form_dropdown_num_records('num_registros', $num_registros_selected, 'form_num_registros');
+		var_dump($num_registros_selected);
 		echo form_close();
 		?>
+
+
 
 	<?php else: ?>
 		<h2>No se han encontrado vehículos</h2>

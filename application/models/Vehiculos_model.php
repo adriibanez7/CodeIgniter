@@ -75,6 +75,19 @@ class Vehiculos_model extends CI_Model {
 		$this->db->update('VEHICULO', $vehiculo);
 	}
 
+//	public function guardar_ruta_imagen($id_vehiculo, $ruta_imagen) {
+//		$this->db->set('RUTA_IMAGEN', $ruta_imagen);
+//		$this->db->where('PK_ID_VEHICULO', $id_vehiculo);
+//		$this->db->update('VEHICULO');
+//	}
+
+	public function obtener_ruta_imagen($id_vehiculo) {
+		$this->db->select('RUTA_IMAGEN');
+		$this->db->where('PK_ID_VEHICULO', $id_vehiculo);
+		return $this->db->get('VEHICULO')->row('RUTA_IMAGEN');
+	}
+
+
 
 
 

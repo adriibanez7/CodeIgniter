@@ -17,6 +17,8 @@ class Vehiculos extends CI_Controller {
 		$this->load->model('Reservas_model');
 		$this->load->model('Empleados_model');
 		$this->load->model('Administrador_model');
+
+
 	}
 
 	public function index()
@@ -26,47 +28,49 @@ class Vehiculos extends CI_Controller {
 
 	public function mostrar_vehiculos($num_registros = 5)
 	{
-		if ($this->input->post('num_registros')) {
-			$num_registros = $this->input->post('num_registros');
-		}
+		$num_registros = $this->input->post('num_registros')
+			? $this->input->post('num_registros')
+			: $num_registros;
+
 
 //		$this->Administrador_model->add_new_admin('Adrián','Ibáñez Montalvo','adrian.ibanez@circulargo.com','1234');
 
-		$config = array();
-		$config["base_url"] = base_url() . "vehiculos/mostrar_vehiculos";
-		$config["total_rows"] = $this->Vehiculos_model->get_vehicles_count(
-			$this->input->post('tx_marca'),
-			$this->input->post('tx_modelo'),
-			$this->input->post('tx_matricula')
+		$config = array(
+			'base_url' => base_url() . 'vehiculos/mostrar_vehiculos',
+			'total_rows' => $this->Vehiculos_model->get_vehicles_count(
+				$this->input->post('tx_marca'),
+				$this->input->post('tx_modelo'),
+				$this->input->post('tx_matricula')
+			),
+			'per_page' => $num_registros,
+			'uri_segment' => 3,
+			'first_link' => '<<',
+			'last_link' => '>>',
+			'next_link' => '>',
+			'prev_link' => '<'
 		);
-		$config["per_page"] = $num_registros;
-		$config["uri_segment"] = 3;
-		$config['first_link'] = '<<';
-		$config['last_link'] = '>>';
-		$config['next_link'] = '>';
-		$config['prev_link'] = '<';
 
 		$this->pagination->initialize($config);
-		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$page = $this->uri->segment(3, 0);
 
-		$data["vehiculos"] = $this->Vehiculos_model->get_all_vehicles(
-			$config["per_page"],
-			$page,
-			$this->input->post('tx_marca'),
-			$this->input->post('tx_modelo'),
-			$this->input->post('tx_matricula'),
-			$this->input->post('order_by'),
-			$this->input->post('order_dir'),
+		$data = array(
+			'vehiculos' => $this->Vehiculos_model->get_all_vehicles(
+				$config['per_page'],
+				$page,
+				$this->input->post('tx_marca'),
+				$this->input->post('tx_modelo'),
+				$this->input->post('tx_matricula'),
+				$this->input->post('order_by'),
+				$this->input->post('order_dir')
+			),
+			'pagination_text' => sprintf("%d al %d de %d vehículos",
+				$page + 1,
+				min(($page + 1) * $config['per_page'], $config['total_rows']),
+				$config['total_rows']
+			),
+			'num_registros_selected' => $num_registros,
+			'marcas' => $this->Vehiculos_model->get_marcas()
 		);
-
-		$start = $page + 1;
-		$end = min(($page + 1) * $config["per_page"], $config["total_rows"]);
-		$total = $config["total_rows"];
-		$data["pagination_text"] = "{$start} al {$end} de {$total} vehículos";
-
-		$data["num_registros_selected"] = $num_registros;
-
-		$data['marcas'] = $this->Vehiculos_model->get_marcas();
 
 		$this->load->view('vehiculos', $data);
 	}
@@ -193,9 +197,4 @@ class Vehiculos extends CI_Controller {
 
 		return true;
 	}
-
-
-
-
-
 }
