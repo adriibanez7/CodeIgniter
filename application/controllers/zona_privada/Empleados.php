@@ -25,12 +25,13 @@ class Empleados extends Administrador_Controller
 		self::listado();
 	}
 
-	public function listado($num_registros = 5)
+	public function listado()
 	{
 
 		if ($this->input->post('num_registros')) {
-			$num_registros = $this->input->post('num_registros');
+			$this->session->set_userdata('num_registros', $this->input->post('num_registros'));
 		}
+		$num_registros = $this->session->userdata('num_registros') ?? 5;
 
 		$config = array();
 		$config["base_url"] = base_url() . "zona_privada/empleados/listado";

@@ -17,8 +17,6 @@ class Vehiculos extends CI_Controller {
 		$this->load->model('Reservas_model');
 		$this->load->model('Empleados_model');
 		$this->load->model('Administrador_model');
-
-
 	}
 
 	public function index()
@@ -26,12 +24,12 @@ class Vehiculos extends CI_Controller {
 		$this->mostrar_vehiculos();
 	}
 
-	public function mostrar_vehiculos($num_registros = 5)
+	public function mostrar_vehiculos()
 	{
-		$num_registros = $this->input->post('num_registros')
-			? $this->input->post('num_registros')
-			: $num_registros;
-
+		if ($this->input->post('num_registros')) {
+			$this->session->set_userdata('num_registros', $this->input->post('num_registros'));
+		}
+		$num_registros = $this->session->userdata('num_registros') ?? 5;
 
 //		$this->Administrador_model->add_new_admin('Adrián','Ibáñez Montalvo','adrian.ibanez@circulargo.com','1234');
 
